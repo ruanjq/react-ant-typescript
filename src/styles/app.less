@@ -1,0 +1,137 @@
+
+@import '~antd/dist/antd.css';
+@import "./variable";
+
+  
+
+.fl{
+    float: left!important;
+}
+.fr{ float: right!important;}
+.clearfix{
+    display: block;
+    &::after{
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+        font-size: 0;
+    }
+}
+.main-content{
+    height: 100%;
+    display: flex;
+     overflow-x: auto;
+    .left{
+        height: 100VH; background: @themeColor; 
+    }
+    .right{
+        flex: 1;  height: 100VH; width: 100%; position: relative;overflow-y: hidden;
+    }
+}
+#root{
+    height: 100%;overflow-y: hidden;min-width: 1200px;
+}
+
+// 重写ant menu 样式背景
+.ant-menu-submenu > .ant-menu{
+    background: @themeColor!important;
+}
+.ant-menu-vertical.ant-menu-sub > .ant-menu-submenu{
+    color: rgba(255, 255, 255, 0.65);
+}
+.ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow{
+    &:before,&:after{
+        background:  rgba(255, 255, 255, 0.65);;
+    }
+}
+
+.sider-bar-wrapper{
+    position: relative;  z-index: 2; height: 100vh;
+    &.sider-bar-open{width: @siderBarWidth;}
+    &.sider-bar-close{width: @siderBarMinWidth;}
+    .ant-menu-inline{width: @siderBarWidth;}
+    .collapsed-sidebar{
+        position: absolute; right: -65px;
+        z-index: 2;
+        top: 14px;
+    }
+
+    
+    
+    .logo{
+        height: @pageHeadHeight; text-align: center; line-height: @pageHeadHeight;
+        background: #00274E;font-size: 26px; font-weight: bolder; cursor: pointer;
+        a{ color: #FFF; background: inherit;display: flex;
+            justify-content: center; align-items: center;
+            height: 60px;
+        }
+        i{transition: all 0.2s;}
+        span{ display: inline-block; margin-left: 10px;transition: all 0.2s; 
+            opacity: 1;
+            &.hidden{
+                width: 0; font-size: 12px;  opacity: 0; margin-left: 0; position: absolute;
+            }
+            &.anticon{margin: 0;}
+        }
+    }
+    .menu-box{
+        position: absolute; top: @pageHeadHeight; bottom: 0;
+        overflow: auto;
+        overflow-x: hidden;
+        left: 0; right: 0;
+        &::-webkit-scrollbar-track{
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar {
+            width: 3px;
+            background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #000000;
+            border: 2px solid #555555;
+        }
+    }
+}
+
+.nav-bar-wrapper{
+    height: @pageHeadHeight;padding-left: 88px;
+    padding-right: 30px;
+    line-height: @pageHeadHeight;
+    border-radius: 0!important;border-bottom: 1px solid #e6e6e6;
+    .text{
+        color: #333;
+        font-size: 16px;
+        font-weight: bolder;
+        line-height: 1;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .site-menu{
+        display: inline-block; vertical-align: middle;
+    }
+}
+
+.main-wrapper{
+    position: absolute; 
+    top: @pageHeadHeight; bottom: @pageFooterHeight; left: 0; right: 0;
+    background: #f0f2f5; padding: 15px 20px;
+    .main-body{
+        margin-top: 10px; background: #FFF; padding: 15px;
+    }
+}
+
+.footer-wrapper{
+    position: absolute; left: 0; right: 0; 
+    bottom: 0; height: @pageFooterHeight;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
