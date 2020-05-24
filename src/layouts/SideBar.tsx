@@ -1,37 +1,82 @@
 import React from "react";
 import { Menu, Button } from "antd";
 import {
-    AppstoreOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    PieChartOutlined,
-    DesktopOutlined,
-    ContainerOutlined,
-    MailOutlined,
     ShopOutlined,
+    SettingOutlined
 } from "@ant-design/icons";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import { throttle } from "../modules/tools";
+import {routePrefix} from "../modules/config";
+// import { appInfoAction } from "../redux/actions/app_action";
 
-import { appInfoAction } from "../redux/actions/app_action";
+const MENU_DATA = require("../json/menu.json");
 
 const { SubMenu } = Menu;
 
-const MIN_BODY_WIDTH = 1200;
+const MIN_BODY_WIDTH = 400;
+
+
 
 interface IProps{
-    dispatch:any,
+    dispatch:any;
+    history:any;
+    location:any
 }
 
 interface IState{
     collapsed:boolean;
+    defaultOpenKeys:any
+    defaultSelectedKeys:any;
+    menuData:any[]
+}
 
+const MenuNode = (props) =>{
+    let {list,defaultOpenKeys,defaultSelectedKeys,hanldClick,collapsed} = props ;
+    if(list.length != 0){
+        return (
+            <Menu
+                defaultOpenKeys={defaultOpenKeys}
+                defaultSelectedKeys={defaultSelectedKeys} 
+                onClick={hanldClick}  
+                mode="inline" theme="dark" 
+                inlineCollapsed={collapsed}>
+                {list.map((pitem,pindex) => {
+                    if(pitem.children && pitem.children.length){
+                        return (
+                            <SubMenu 
+                                key={routePrefix + pitem.path}
+                                title={<span><SettingOutlined/><span>{pitem.name}</span></span>}
+                            >
+                                {pitem.children.map((sub_item,sub_index) => {
+                                    return (<Menu.Item key={routePrefix + "" + pitem.path +"" +sub_item.path}>{sub_item.name}</Menu.Item>)
+                                })}
+                            </SubMenu>
+                        )
+                    }else{
+                        return (
+                            <Menu.Item key={pitem.path}>
+                                <SettingOutlined/>
+                                <span>{pitem.name}</span>
+                            </Menu.Item>
+                        )
+                    }
+                })}
+            </Menu>
+        )
+    } else {
+        return null;
+    }
 }
 
 class SiderBar extends React.Component<IProps, IState> {
     state = {
         collapsed: document.body.clientWidth <= MIN_BODY_WIDTH ? true : false,
+        menuData:MENU_DATA.data.menus,
+        defaultOpenKeys:[],
+        defaultSelectedKeys: this.props.location.pathname
     };
 
     constructor(props:any){
@@ -58,11 +103,21 @@ class SiderBar extends React.Component<IProps, IState> {
 
     UNSAFE_componentWillMount(){
         this.toggleEventListener();
-        
+        this.setDefaultSelectedKeys();
+    }
+
+    setDefaultSelectedKeys(){
+        let matchKey = this.state.defaultSelectedKeys.match(/^(\/.*)\//);
+        console.log("matchKey",matchKey[1]);
+        if(matchKey && matchKey[1]){
+            this.setState({
+                defaultOpenKeys:[matchKey[1]]
+            })
+        }
     }
 
     componentDidMount() {
-        this.props.dispatch(appInfoAction);
+        // this.props.dispatch(appInfoAction);
     }
 
     toggleEventListener() {
@@ -80,7 +135,30 @@ class SiderBar extends React.Component<IProps, IState> {
         );
     }
 
+    autoOpenKey(menuData,currentUrl){
+        console.log("menuData,currentUrl",menuData,currentUrl);
+        let result = [];
+        if(menuData instanceof Array){
+            menuData.forEach((pitem,pindex) => {
+                if(pitem.children && pitem.children.length){
+                    pitem.children.forEach((sub_item,sub_index) => {
+                        if(sub_item.path === currentUrl){
+                            result =  ['' + pindex, pindex + '' + sub_index]
+                        }
+                    })
+                } 
+            })
+        }
+        return result;
+    }
+
+    linkTo = (item) =>{
+        console.log("item",item);
+        this.props.history.push(item.key);
+    }
+
     render() {
+        console.log(this.state.defaultSelectedKeys);
         return (
             <div
                 className={`sider-bar-wrapper ${
@@ -101,56 +179,13 @@ class SiderBar extends React.Component<IProps, IState> {
                     </a>
                 </div>
                 <div className="menu-box">
-                    <Menu
-                        defaultSelectedKeys={["1"]}
-                        defaultOpenKeys={["sub1"]}
-                        mode="inline"
-                        theme="dark"
-                        inlineCollapsed={this.state.collapsed}
-                    >
-                        <Menu.Item key="1">
-                            <PieChartOutlined />
-                            <span>Option 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <DesktopOutlined />
-                            <span>Option 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <ContainerOutlined />
-                            <span>Option 3</span>
-                        </Menu.Item>
-                        <SubMenu
-                            key="sub1"
-                            title={
-                                <span>
-                                    <MailOutlined />
-                                    <span>Navigation One</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="5">Option 5</Menu.Item>
-                            <Menu.Item key="6">Option 6</Menu.Item>
-                            <Menu.Item key="7">Option 7</Menu.Item>
-                            <Menu.Item key="8">Option 8</Menu.Item>
-                        </SubMenu>
-                        <SubMenu
-                            key="sub2"
-                            title={
-                                <span>
-                                    <AppstoreOutlined />
-                                    <span>Navigation Two</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="9">Option 9</Menu.Item>
-                            <Menu.Item key="10">Option 10</Menu.Item>
-                            <SubMenu key="sub3" title="Submenu">
-                                <Menu.Item key="11">Option 11</Menu.Item>
-                                <Menu.Item key="12">Option 12</Menu.Item>
-                            </SubMenu>
-                        </SubMenu>
-                    </Menu>
+                    <MenuNode 
+                        list={this.state.menuData} 
+                        defaultOpenKeys={this.state.defaultOpenKeys} 
+                        collapsed={this.state.collapsed}  
+                        defaultSelectedKeys={this.state.defaultSelectedKeys} 
+                        hanldClick={this.linkTo}
+                    ></MenuNode>
                 </div>
             </div>
         );
@@ -160,7 +195,7 @@ class SiderBar extends React.Component<IProps, IState> {
 // 通过connect连接组件和redux数据和dispatch方法
 const mapStateToProps = (state,ownProps) => {
     return {
-        app:state.app
+        userInfo:state.userInfo
     }
 }
 

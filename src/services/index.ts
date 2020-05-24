@@ -2,8 +2,11 @@ import axios from 'axios';
 import qs from 'qs';
 // import store from "../redux/store";
 // create an axios instance
+
+import {SERVICE_URL} from "../modules/config";
+
 const service = axios.create({
-    baseURL: "", // api的base_url
+    baseURL: SERVICE_URL, // api的base_url
     timeout: 60000, // request timeout
     // headers: {
     //     'X-Requested-With': 'XMLHttpRequest'
@@ -20,13 +23,13 @@ service.interceptors.request.use(config => {
     // Do something before request is sent
   
     if (config.method === 'post') {
-        let data = qs.parse(config.data, {
-            parameterLimit: Infinity
-        })
+        // let data = qs.parse(config.data, {
+        //     parameterLimit: Infinity
+        // })
 
-        config.data = qs.stringify({
-            ...data
-        })
+        // config.data = qs.stringify({
+        //     ...data
+        // })
     } else if (config.method === 'get') {
         config.params = {
             ...config.params

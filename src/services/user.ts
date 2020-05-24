@@ -1,6 +1,28 @@
 
 import services from "./index";
 
+
+interface ILoginData{
+    account:string;
+    password:string
+}
+export function login(params:ILoginData):Promise<any>{
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            resolve({
+                code:0,
+                msg:"success"
+            });
+        },3000);
+    })
+    // return services({
+    //     url: '/account/login',
+    //     method: 'POST',
+    //     data: params
+    // });
+}
+
+
 export function getUserInfo():Promise<any>{
     return new Promise<any>((resolve,reject) =>{
         setTimeout(() =>{

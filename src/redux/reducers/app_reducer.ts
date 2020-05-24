@@ -1,17 +1,21 @@
 
-import {APP_INFO} from "../actions/app_action";
+import {LOGIN} from "../actions/app_action";
+
+
 
 const initialState = {
-    appInfo:{},
-    site: ''
+    userInfo:{
+        account:"...",
+        token:""
+    }
 };
 
 
 export const appReducer = (state = initialState ,action:any) => {
     switch (action.type) {
-        case APP_INFO:
+        case LOGIN:
             return {
-                ...state,appInfo:action.payload
+                ...state,userInfo:action.payload
             }
         default:
             return state;

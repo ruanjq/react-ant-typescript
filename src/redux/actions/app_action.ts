@@ -1,16 +1,15 @@
 
-import {getUserInfo} from "../../services/user";
+import {login} from "../../services/user";
 
 
-export const APP_INFO = 'APP_INFO';
+export const LOGIN = 'LOGIN';
 
 
-export const appInfoAction = async (dispatch:any) =>{
-    const res = await getUserInfo();
-    
+export const loginAction = (param) => async (dispatch:any,getState:any) =>{
+    const res = await login(param); 
     dispatch({
-        type:APP_INFO,
-        payload:res
+        type:LOGIN,
+        payload:param
     });
 }
 

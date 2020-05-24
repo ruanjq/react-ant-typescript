@@ -40,6 +40,9 @@ const OverlayMenu = (
 
 interface IProps{
     dispatch:any,
+    userInfo:{
+        account:string;
+    }
 }
 
 interface IState{
@@ -63,7 +66,7 @@ class NavBar extends React.Component<IProps,IState>{
                 <div className="fr cursor-pointer">
                     <Dropdown overlay={OverlayMenu} placement="bottomRight">
                         <span className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                        欢迎:【xxx】&nbsp; <DownOutlined />
+        欢迎:【{this.props.userInfo.account}】&nbsp; <DownOutlined />
                         </span>
                     </Dropdown>
                 </div>
@@ -76,7 +79,7 @@ class NavBar extends React.Component<IProps,IState>{
 // 通过connect连接组件和redux数据和dispatch方法
 const mapStateToProps = (state,ownProps) => {
     return {
-        app:state.app
+        userInfo:state.app.userInfo
     }
 }
 

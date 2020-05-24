@@ -1,16 +1,17 @@
 import React from "react";
 import {Spin} from "antd";
 import Loadable from "react-loadable";
+import {routePrefix} from "../modules/config";
 
 
 let Loading = () => <Spin/>
 
 let routes = [
     {
-        path:"/app",
+        path:routePrefix,
         name:"app",
-        breadcrumbName:"",
-        exact:false,
+        breadcrumbName:"首页",
+        auth:true,
         component:Loadable({
             loader:()=> import("../layouts/Main"),
             loading:Loading
@@ -20,17 +21,26 @@ let routes = [
                 path:"/index",
                 name:"index",
                 breadcrumbName:"",
-                exact:true,
                 component:Loadable({
                     loader:()=> import("../views/home/Home"),
                     loading:Loading
                 })
-            } 
+            },
+            {
+                path:"/setting/blackList",
+                name:"blackList",
+                breadcrumbName:"黑名单",
+                component:Loadable({
+                    loader:()=> import("../views/setting/BlackList"),
+                    loading:Loading
+                })
+            },
         ]
     },{
         path:"/404",
         name:"notFound",
-        exact:false,
+        auth:false,
+        breadcrumbName:"notFound",
         component:Loadable({
             loader:()=> import("../components/404"),
             loading:Loading
@@ -38,12 +48,22 @@ let routes = [
     },{
         path:"/login",
         name:"login",
-        exact:false,
+        auth:false,
+        breadcrumbName:"login",
         component:Loadable({
             loader:()=> import("../views/login/Login"),
             loading:Loading
         })
-    }
+    },{
+      path:"/test",
+      name:"test",
+      auth:false,
+      breadcrumbName:"test",
+      component:Loadable({
+          loader:()=> import("../views/Test"),
+          loading:Loading
+      })
+  }
 ]
 
 export default routes;

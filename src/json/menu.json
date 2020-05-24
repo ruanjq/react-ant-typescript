@@ -1,0 +1,19 @@
+{
+    "code": 0,
+    "msg": "",
+    "data":{
+        "menus":[{
+            "name": "系统设置",
+            "path": "/setting",
+            "children": [
+                {
+                    "name": "黑名单",
+                    "path": "/blackList"
+                }
+            ]
+        },{
+            "name": "测试菜单",
+            "path": "/test"
+        }]
+    }
+}
