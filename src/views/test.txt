@@ -1,0 +1,99 @@
+import React, { useRef, useEffect, FC } from "react";
+import DataToCanvas,{IDataItem} from '../components/posterShare/dataToCanvas';
+export default function App() {
+  const canvasData: Array<IDataItem> = [
+    {
+      type: "images",
+      position: [0, 0],
+      src:
+        "http://pic20.nipic.com/20120502/730585_154253727364_2.jpg?t=" +
+        Date.now(),
+      size: [375, 667]
+    },
+    {
+      type:"linearGradient",
+      linearGradienAxis:[0, 497, 0, 667],
+      colorStops:[[0.0, 'rgba(0,0,0,0)'],[1.0, 'rgba(0,0,0,0.8)']],
+      fillRect:[0, 497, 375, 170]
+    },
+    {
+      type: "images",
+      position: [280, 567],
+      src:
+        "https://big-c.oss-cn-hangzhou.aliyuncs.com/gfqjd/genQRCode/1a2361b97358724d3912140037eb8592.jpg?t=" +
+        Date.now(),
+      size: [74, 74],
+      circle: true,
+      circleBorder: {
+        lineWidth: 4,
+        strokeStyle: "#FFF"
+      }
+    },
+    {
+      type: "images",
+      position: [20, 567],
+      src:
+        "https://big-c.oss-cn-hangzhou.aliyuncs.com/cms/img/jhlmranjuhhxblv29udh5v6qx6oxxhfe%E5%B0%81?t=" +
+        Date.now(),
+      size: [74, 74],
+      circle: true,
+      circleBorder: {
+        lineWidth: 2,
+        strokeStyle: "#FFF"
+      }
+    },
+    {
+      type: "text",
+      position: [110, 590],
+      text: "未***",
+      style: {
+        fillStyle: '#FFF',
+        fontSize: 20,
+        ellipsis: true,
+        lineHeight: 15,
+        maxWidth: 150,
+        row: 1
+      }
+    },
+    {
+      type: "text",
+      position: [110, 613],
+      text: "邀您扫一扫，参与活动",
+      style: {
+        fillStyle: "#FFF",
+        fontSize: 12
+      }
+    }
+  ];
+
+  const onFinish = (canvas: HTMLCanvasElement) => {
+    console.log(canvas);
+    // const ctx = canvas.getContext("2d")
+    // var linearGrad = ctx.createLinearGradient(0, 994, 0, 1334);
+    // linearGrad.addColorStop(0.0, 'rgba(0,0,0,0)');    //第一个参数表示关键颜色的位置0表示起始位置,1表示终点位置,第二个参数表示关键颜色的颜色。
+    // linearGrad.addColorStop(1.0, 'rgba(0,0,0,0.8)');
+
+
+    // ctx.fillStyle = linearGrad;
+    // ctx.fillRect(0, 994, 750, 340);
+    // 获取图片base64字符
+    // ...
+  };
+
+  const filteremoji = (str = '') => {
+    const ranges = ['\ud83c[\udf00-\udfff]', '\ud83d[\udc00-\ude4f]', '\ud83d[\ude80-\udeff]']
+    return str.replace(new RegExp(ranges.join('|'), 'g'), '')
+  }
+
+  const id = "canvas";
+
+  return (
+    <DataToCanvas
+      id={id}
+      width={canvasData[0].size && canvasData[0].size[0]}
+      height={canvasData[0].size && canvasData[0].size[1]}
+      data={canvasData}
+      onFinish={onFinish}
+    />
+  );
+}

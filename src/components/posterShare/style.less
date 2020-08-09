@@ -1,0 +1,56 @@
+.poster-share-wrap {
+  position: fixed;
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.65);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .inner-wrap {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    text-align: center;
+  }
+  .img-wrap {
+    border-radius: 6px; 
+    overflow: hidden;
+    img {
+      display: inline-block;
+      vertical-align: top;
+      max-width: 100%;
+    }
+  }
+  .tips {
+    font-size: 16px;
+    color: #fff;
+    margin-top: 13px;
+  }
+  .close-icon {
+    background: url('./icon_off@2x.png') no-repeat;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    font-size: 0; 
+    margin-top: 30px;
+    margin-left: auto; 
+    margin-right: auto;
+  }
+  .canvas-wrap{
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+    visibility: hidden;
+  }
+}
+
+.canvas-wrap{
+  width: 400px;
+  canvas{
+    width: 400px!important;
+    height: auto!important;
+  }
+}
