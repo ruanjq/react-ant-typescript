@@ -1,44 +1,50 @@
 import React, { useState, useRef, useEffect, FC, useCallback } from "react";
 
-
-const Child = React.memo((props: any) => {
-  console.log("子组件props", props)
-  const { list, active } = props
-  const handleClick = (item,e) => {
-    props.onChange(item)
-  }
-  return <div>
-    {
-      list.map((item, index) => {
-        return <div key={index} style={{backgroundColor: active === item ? 'red': 'transparent'}}><button onClick={e => handleClick(item,e)}>回调{item}</button> <br/></div>
-      })
-    }
-  </div>
-})
-
+import useScroll from "../hooks/useScroll"
 
 export default function App() {
-  let [active, setActive] = useState(1)
-  const [list, setList] = useState([1, 2, 3, 4, 5])
-  
-  const showActive = () => {
-    console.log("当前key", active)
-  }
+  const myref = useRef<HTMLDivElement>(null)
+  const scrollInfo = useScroll(myref)
+  console.log(scrollInfo.distance,scrollInfo.direction)
+  return <div ref={myref} style={{ height: "100%", width:"100%", overflow:"auto"}}>
+    <div style={{height:"1500px", width:"1600px"}}>
+      <h2>asdasd</h2>
+      <pre>
+        adas
+        asdasd <br/>
 
-  const handleChange = (key) => {
-    console.log("key", key)
-    setActive(key)
-  }
-  const add = () => {
-    active +=1
-    handleChange(active)
-  }
-  return <div>
-    <h2>当前选中的key{active}</h2>
-    <button onClick={add}>key 地增</button>
-    <button onClick={showActive}>打印</button>
-    <hr />
-    <Child active={active} list={list} onChange={handleChange} />
+
+
+
+        asdsad <br/>
+        43<br/>
+        53<br/>
+        5345<br/>
+
+        5<br/>
+
+        56
+        7<br/>
+        3
+        5
+
+        const styles = S<br/>
+        
+        tyleSheet.create<br/>
+          fd
+          gdf<br/><br/>
+          gds
+          <br/>
+          dsf
+          sdf<br/>
+          dsf<br/>
+          ds
+          fs
+
+        
+        
+      </pre>
+    </div>
   </div>
 }
 
