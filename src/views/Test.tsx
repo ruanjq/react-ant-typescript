@@ -69,7 +69,7 @@ export default function PageNavTime() {
 
   const handleClick = (key) => {
     setCurrentKey(+key)
-    fixedNavRef.current.handleClickScrollTo(+key);
+    fixedNavRef.current.handleScrollToFloor(+key);
   }
 
 
@@ -93,10 +93,11 @@ export default function PageNavTime() {
     </FixedNav>
     <div id="J_section1" style={{ height: "200px", border: "1px solid gray", backgroundColor: "gray" }}><h2>灰色</h2></div>
     <div id="J_section2" style={{ height: "200px", border: "1px solid gray", backgroundColor: "#FFF",paddingTop:"100px",marginTop:"20px" }}><h2>白色</h2></div>
-    <div id="J_section3" style={{ height: "600px", border: "1px solid red",backgroundColor:"red" }}><h2>红色</h2></div>
+    <div id="J_section3" style={{ height: "200px", border: "1px solid red",backgroundColor:"red" }}><h2>红色</h2></div>
     <div id="J_section4" style={{ height: "200px", border: "1px solid blue" ,backgroundColor:"blue"}}><h2>蓝色</h2></div>
     <div id="J_section5" style={{ height: "200px", border: "1px solid blue" ,backgroundColor:"yellow"}}><h2>蓝色</h2></div>
     <div id="J_section6" style={{ height: "200px", border: "1px solid blue" ,backgroundColor:"black"}}><h2>黑色</h2></div>
     <div id="J_section7" style={{ height: "200px", border: "1px solid blue" ,backgroundColor:"pink"}}><h2>粉色</h2></div>
+    
   </div>
 }
